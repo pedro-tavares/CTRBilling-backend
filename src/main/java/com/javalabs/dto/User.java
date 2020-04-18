@@ -14,9 +14,12 @@ public class User implements Serializable {
 	@QueryParam("id")
 	@Getter @Setter
 	private Long id;
-	@QueryParam("name")
+	@QueryParam("first_name")
 	@Getter @Setter
-	private String name;
+	private String first_name;
+	@QueryParam("last_name")
+	@Getter @Setter
+	private String last_name;
 	@QueryParam("email")
 	@Getter @Setter
 	private String email;
@@ -32,8 +35,9 @@ public class User implements Serializable {
 
 	public User() {}
 
-	public User(String name, String email, String password) {
-		this.name = name;
+	public User(String first_name, String last_name, String email, String password) {
+		this.first_name = first_name;
+		this.last_name = last_name;
 		this.email = email;
 		this.password = password;
 	}
