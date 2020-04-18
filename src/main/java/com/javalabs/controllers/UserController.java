@@ -28,7 +28,10 @@ public class UserController {
 	@RequestMapping(path = "/login", method = RequestMethod.POST)
 	public User login(@RequestBody User user) throws Exception {
 		UserEntity entity = service.login(new UserEntity(user));
-		return mapper.map(entity, User.class);
+		if (entity != null) {
+			return mapper.map(entity, User.class);
+		}
+		throw new Exception("User NOT Found or Invalid Credentials.");
 	}
 
 	@RequestMapping(path = "/save", method = RequestMethod.POST)
