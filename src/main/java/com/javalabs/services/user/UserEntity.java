@@ -1,4 +1,4 @@
-package com.javalabs.services.users;
+package com.javalabs.services.user;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
