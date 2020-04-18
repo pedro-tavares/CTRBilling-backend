@@ -1,5 +1,8 @@
 package com.javalabs.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 
 import javax.ws.rs.QueryParam;
@@ -8,14 +11,24 @@ public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@QueryParam("name")
+	@QueryParam("id")
+	@Getter @Setter
 	private Long id;
 	@QueryParam("name")
+	@Getter @Setter
 	private String name;
 	@QueryParam("email")
+	@Getter @Setter
 	private String email;
 	@QueryParam("password")
+	@Getter @Setter
 	private String password;
+	@QueryParam("roles")
+	@Getter @Setter
+	private String roles;
+	@QueryParam("enabled")
+	@Getter @Setter
+	private boolean enabled;
 
 	public User() {}
 
@@ -25,35 +38,4 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
 }
