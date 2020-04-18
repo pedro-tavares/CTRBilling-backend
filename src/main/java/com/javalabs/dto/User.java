@@ -23,9 +23,9 @@ public class User implements Serializable {
 	@QueryParam("email")
 	@Getter @Setter
 	private String email;
-	@QueryParam("the_password")
+	@QueryParam("password")
 	@Getter @Setter
-	private String thePassword;
+	private String password;
 	@QueryParam("roles")
 	@Getter @Setter
 	private String roles;
@@ -35,11 +35,11 @@ public class User implements Serializable {
 
 	public User() {}
 
-	public User(String firstName, String lastName, String email, String thePassword) {
+	public User(String firstName, String lastName, String email, String password) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.thePassword = thePassword;
+		this.password = password;
 	}
 
 }

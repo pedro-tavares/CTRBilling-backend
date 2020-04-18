@@ -1,8 +1,10 @@
-package com.javalabs.controllers;
+package com.javalabs.controller;
 
 import java.util.List;
 
 import org.dozer.DozerBeanMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,13 +13,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.javalabs.dto.User;
-import com.javalabs.services.user.UserEntity;
-import com.javalabs.services.user.UserService;
+import com.javalabs.service.user.UserEntity;
+import com.javalabs.service.user.UserService;
 
 @RestController
 @CrossOrigin
 @RequestMapping(path = "/user")
 public class UserController {
+
+	private Logger LOG = LoggerFactory.getLogger(UserController.class);
 
 	@Autowired
 	UserService service;
@@ -29,9 +33,18 @@ public class UserController {
 	public User login(@RequestBody User user) throws Exception {
 		UserEntity entity = service.login(new UserEntity(user));
 		if (entity != null) {
+
+			LOG.debug(
+					"\nUserController LOGIN, user email:" + user.getEmail() +
+					", password:" + user.getPassword()
+			);
+
+			if (!user.getPassword().equals("password"/*entity.getThePassword()*/)) {
+				throw new Exception("INVALID Credentials. Please check your password.");
+			}
 			return mapper.map(entity, User.class);
 		}
-		throw new Exception("User NOT Found or Invalid Credentials.");
+		throw new Exception("User NOT Found.");
 	}
 
 	@RequestMapping(path = "/save", method = RequestMethod.POST)

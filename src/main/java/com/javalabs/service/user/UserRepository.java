@@ -1,4 +1,4 @@
-package com.javalabs.services.user;
+package com.javalabs.service.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

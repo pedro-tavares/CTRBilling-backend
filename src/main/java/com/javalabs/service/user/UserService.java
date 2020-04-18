@@ -1,4 +1,4 @@
-package com.javalabs.services.user;
+package com.javalabs.service.user;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-package com.javalabs.services.user;
+package com.javalabs.service.user;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -20,13 +20,13 @@ public class UserEntity {
 	private Long id;
 
 	@Getter @Setter
-	private String first_name;
+	private String firstName;
 	@Getter @Setter
-	private String last_name;
+	private String lastName;
 	@Getter @Setter
 	private String email;
 	@Getter @Setter
-	private String the_password;
+	private String thePassword;
 	@Getter @Setter
 	private String roles;
 	@Getter @Setter
@@ -35,10 +35,10 @@ public class UserEntity {
 	public UserEntity() {}
 
 	public UserEntity(User user) {
-		this.first_name = user.getFirstName();
-		this.last_name = user.getLastName();
+		this.firstName = user.getFirstName();
+		this.lastName = user.getLastName();
 		this.email = user.getEmail();
-		this.the_password = user.getThePassword();
+		this.thePassword = user.getPassword();
 	}
 
 }
