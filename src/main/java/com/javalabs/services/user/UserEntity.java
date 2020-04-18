@@ -1,5 +1,6 @@
 package com.javalabs.services.user;
 
+import lombok.ToString;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;

@@ -16,7 +16,7 @@ public class UserService {
 	private UserRepository userRepository;
 
 	public UserEntity login(UserEntity user) throws Exception {
-		LOG.debug("\nUserService LOGIN, user:$user\n");
+		LOG.debug("\nUserService LOGIN, user:\n" + user.getEmail());
 
 		UserEntity foundUser = this.findByEmail(user.getEmail());
 		if (foundUser != null) {
