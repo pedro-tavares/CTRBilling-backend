@@ -16,16 +16,16 @@ public class User implements Serializable {
 	private Long id;
 	@QueryParam("first_name")
 	@Getter @Setter
-	private String first_name;
+	private String firstName;
 	@QueryParam("last_name")
 	@Getter @Setter
-	private String last_name;
+	private String lastName;
 	@QueryParam("email")
 	@Getter @Setter
 	private String email;
-	@QueryParam("password")
+	@QueryParam("the_password")
 	@Getter @Setter
-	private String password;
+	private String thePassword;
 	@QueryParam("roles")
 	@Getter @Setter
 	private String roles;
@@ -35,11 +35,11 @@ public class User implements Serializable {
 
 	public User() {}
 
-	public User(String first_name, String last_name, String email, String password) {
-		this.first_name = first_name;
-		this.last_name = last_name;
+	public User(String firstName, String lastName, String email, String thePassword) {
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.email = email;
-		this.password = password;
+		this.thePassword = thePassword;
 	}
 
 }

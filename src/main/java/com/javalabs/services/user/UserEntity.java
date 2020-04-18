@@ -26,7 +26,7 @@ public class UserEntity {
 	@Getter @Setter
 	private String email;
 	@Getter @Setter
-	private String password;
+	private String the_password;
 	@Getter @Setter
 	private String roles;
 	@Getter @Setter
@@ -35,10 +35,10 @@ public class UserEntity {
 	public UserEntity() {}
 
 	public UserEntity(User user) {
-		this.first_name = user.getFirst_name();
-		this.last_name = user.getLast_name();
+		this.first_name = user.getFirstName();
+		this.last_name = user.getLastName();
 		this.email = user.getEmail();
-		this.password = user.getPassword();
+		this.the_password = user.getThePassword();
 	}
 
 }
