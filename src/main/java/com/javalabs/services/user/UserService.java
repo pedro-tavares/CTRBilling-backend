@@ -1,5 +1,7 @@
 package com.javalabs.services.user;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,15 +10,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
 
+	private Logger LOG = LoggerFactory.getLogger(UserService.class);
+
 	@Autowired
 	private UserRepository userRepository;
 
 	public UserEntity login(UserEntity user) throws Exception {
+		LOG.debug("\nUserService LOGIN, user:$user\n");
+
 		UserEntity foundUser = this.findByEmail(user.getEmail());
 		if (foundUser != null) {
 			return foundUser;
 		}
-		throw new Exception("User NOT Found!");
+		LOG.debug("\nUser NOT Found!\n");
+		return null;
 	}
 
 	public UserEntity add(UserEntity user) {
