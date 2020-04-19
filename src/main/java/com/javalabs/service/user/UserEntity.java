@@ -1,8 +1,5 @@
 package com.javalabs.service.user;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -16,20 +13,12 @@ public class UserEntity {
 
 	@Id
 	@GeneratedValue
-	@Getter @Setter
 	private Long id;
-
-	@Getter @Setter
 	private String firstName;
-	@Getter @Setter
 	private String lastName;
-	@Getter @Setter
 	private String email;
-	@Getter @Setter
 	private String thePassword;
-	@Getter @Setter
 	private String roles;
-	@Getter @Setter
 	private boolean enabled;
 
 	public UserEntity() {}
@@ -41,4 +30,60 @@ public class UserEntity {
 		this.thePassword = user.getPassword();
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getThePassword() {
+		return thePassword;
+	}
+
+	public void setThePassword(String thePassword) {
+		this.thePassword = thePassword;
+	}
+
+	public String getRoles() {
+		return roles;
+	}
+
+	public void setRoles(String roles) {
+		this.roles = roles;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+	
 }
