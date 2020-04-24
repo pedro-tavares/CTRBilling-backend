@@ -1,7 +1,11 @@
 package com.javalabs.controller;
 
+import com.javalabs.dto.FTPFileInfo;
 import com.javalabs.dto.Server;
 import com.javalabs.service.ftp.FTPService;
+
+import java.util.List;
+
 import org.dozer.DozerBeanMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,4 +40,15 @@ public class FTPController {
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	}
 
+	@RequestMapping(path = "/dir", method = RequestMethod.POST)
+	public ResponseEntity<List<FTPFileInfo>> dir(@RequestBody Server server) throws Exception {
+		LOG.debug(
+				"\nFTPController DIR, server:" + server.getName() + ", user:" +server.getUsername()
+		);
+
+		List<FTPFileInfo> fileInfoList = service.dir(server);
+		
+		return ResponseEntity.ok(fileInfoList);
+	}
+	
 }

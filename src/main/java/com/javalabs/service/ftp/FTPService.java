@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.javalabs.dto.FTPFileInfo;
 import com.javalabs.dto.Server;
 
 import java.io.BufferedOutputStream;
@@ -13,6 +14,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
@@ -61,8 +64,8 @@ public class FTPService {
         return true;
 	}
 
-	@SuppressWarnings("finally")	
-	public boolean dir(Server theServer) throws Exception {
+	public List<FTPFileInfo> dir(Server theServer) throws Exception {
+		List<FTPFileInfo> fileInfoList = new ArrayList<FTPFileInfo>();
  
         try {
 
@@ -81,7 +84,10 @@ public class FTPService {
                     }
      
                     if (aFile.isFile()) {
-                    	LOG.debug(aFile.getName() + "," + aFile.getTimestamp());
+                    	FTPFileInfo fileInfo = new FTPFileInfo(aFile.getName(), aFile.getTimestamp().getTime());
+                    	LOG.debug("Adding fileInfo:" + fileInfo.getName() + "," + fileInfo.getDate());
+                    	
+                    	fileInfoList.add(fileInfo);
                     }
                 }
             }            
@@ -96,11 +102,10 @@ public class FTPService {
                 }
             } catch (IOException ex) {
                 ex.printStackTrace();
-                return false;
             }
-            
-            return true;
         }
+        
+        return fileInfoList;
 	}
 	
 	@SuppressWarnings("finally")	
