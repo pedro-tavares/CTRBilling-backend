@@ -6,6 +6,8 @@ import org.dozer.DozerBeanMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,12 +24,16 @@ public class FTPController {
 	DozerBeanMapper mapper;
 
 	@RequestMapping(path = "/login", method = RequestMethod.POST)
-	public String login(@RequestBody Server server) throws Exception {
+	public ResponseEntity<String> login(@RequestBody Server server) throws Exception {
 		LOG.debug(
-				"\nFTPController LOGIN, server:" + server.getName()
+				"\nFTPController LOGIN, server:" + server.getName() + ", user:" +server.getUsername()
 		);
 
-		return service.login(server);
+		if (service.login(server)) {
+			return ResponseEntity.ok().build();
+		}
+		
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	}
 
 }
