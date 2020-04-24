@@ -6,19 +6,23 @@ import org.springframework.stereotype.Service;
 
 import com.javalabs.dto.Server;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.io.InputStream;
+import java.io.OutputStream;
 
+import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPFile;
-import org.apache.commons.net.ftp.FTPReply;
 
 @Service
 public class FTPService {
 
 	private static Logger LOG = LoggerFactory.getLogger(FTPService.class);
 
+	@SuppressWarnings("finally")
 	public boolean login(Server theServer) throws Exception {
 		LOG.debug("\nFTPService LOGIN, server:\n" + 
 				theServer.getName() + ", " + 
@@ -30,6 +34,7 @@ public class FTPService {
 		
 		String server = theServer.getIpAddress();
         int port = theServer.getPort();
+        String path = theServer.getPath();
         String user = theServer.getUsername();
         String pass = theServer.getPassword();
  
@@ -38,32 +43,26 @@ public class FTPService {
         try {
  
             ftpClient.connect(server, port);
-            showServerReply(ftpClient);
+            ftpClient.login(user, pass);
+            ftpClient.enterLocalPassiveMode();
+            ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+
+            // APPROACH #1: using retrieveFile(String, OutputStream)
+            String fileName = "Daily_Calls_CTR001_01012018_43_20_ALL_V3.txt";
+            String remoteFile1 = path + "/" + fileName;
+            File downloadFile1 = new File(
+            		"/home/spiro-admin/java_labs/CTRBilling-backend/target/downloads/" + 
+            		fileName
+            );
+            OutputStream outputStream1 = new BufferedOutputStream(new FileOutputStream(downloadFile1));
+            boolean success = ftpClient.retrieveFile(remoteFile1, outputStream1);
+            outputStream1.close();
  
-            int replyCode = ftpClient.getReplyCode();
-            if (!FTPReply.isPositiveCompletion(replyCode)) {
-                LOG.debug("\nConnect failed!\n");
-                return false;
-            }
+            if (success) {
+                System.out.println("File " + fileName + " has been downloaded successfully.");
+            }            
  
-            boolean success = ftpClient.login(user, pass);
-            showServerReply(ftpClient);
- 
-            if (!success) {
-                LOG.debug("\nCould not login to the server.\n");
-                return false;
-            }
- 
-            // Lists files and directories
-            FTPFile[] files1 = ftpClient.listFiles("/public_ftp");
-            printFileDetails(files1);
- 
-            // uses simpler methods
-            String[] files2 = ftpClient.listNames();
-            printNames(files2);
- 
- 
-        } catch (IOException ex) {
+        } catch (Exception ex) {
         	LOG.debug("\nOOOPS! Something wrong happened.\n");
             ex.printStackTrace();
         } finally {
@@ -75,43 +74,12 @@ public class FTPService {
                 }
             } catch (IOException ex) {
                 ex.printStackTrace();
+                return false;
             }
+            
+            return true;
         }
-		
-		return true;
 		
 	}
 	
-    private static void printFileDetails(FTPFile[] files) {
-        DateFormat dateFormater = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        for (FTPFile file : files) {
-            String details = file.getName();
-            if (file.isDirectory()) {
-                details = "[" + details + "]";
-            }
-            details += "\t\t" + file.getSize();
-            details += "\t\t" + dateFormater.format(file.getTimestamp().getTime());
- 
-            System.out.println(details);
-            LOG.debug("\nFile details:\n" + details);
-        }
-    }
- 
-    private static void printNames(String files[]) {
-        if (files != null && files.length > 0) {
-            for (String aFile: files) {
-            	LOG.debug(aFile);
-            }
-        }
-    }
- 
-    private static void showServerReply(FTPClient ftpClient) {
-        String[] replies = ftpClient.getReplyStrings();
-        if (replies != null && replies.length > 0) {
-            for (String aReply : replies) {
-                LOG.debug("showServerReply:" + aReply);
-            }
-        }
-    }
-    
 }
