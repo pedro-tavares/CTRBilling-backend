@@ -16,38 +16,102 @@ import java.io.OutputStream;
 
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPFile;
 
 @Service
 public class FTPService {
 
 	private static Logger LOG = LoggerFactory.getLogger(FTPService.class);
 
-	@SuppressWarnings("finally")
+	private FTPClient ftpClient;
+	private String server;
+	private int port;
+	private String path;
+	private String user;
+	private String pass;
+	
 	public boolean login(Server theServer) throws Exception {
 		LOG.debug("\nFTPService LOGIN, server:\n" + 
 				theServer.getName() + ", " + 
-				theServer.getIpAddress() + ", " + 
+				theServer.getIpAddress() + ", " +
+				theServer.getPath() + ", " +				
 				theServer.getPort() + ", " +
 				theServer.getUsername() + ", " +
 				theServer.getPassword()
 		);
 		
-		String server = theServer.getIpAddress();
-        int port = theServer.getPort();
-        String path = theServer.getPath();
-        String user = theServer.getUsername();
-        String pass = theServer.getPassword();
+		server = theServer.getIpAddress();
+        port = theServer.getPort();
+        path = theServer.getPath();
+        user = theServer.getUsername();
+        pass = theServer.getPassword();
  
-        FTPClient ftpClient = new FTPClient();
- 
+        ftpClient = new FTPClient();
+        
         try {
- 
             ftpClient.connect(server, port);
             ftpClient.login(user, pass);
+        	
+	    } catch (Exception ex) {
+	    	LOG.debug("\nOOOPS! Something wrong happened.\n");
+	        ex.printStackTrace();
+	        return false;
+	    }
+        
+        return true;
+	}
+
+	@SuppressWarnings("finally")	
+	public boolean dir(Server theServer) throws Exception {
+ 
+        try {
+
+        	this.login(theServer);
+            ftpClient.enterLocalPassiveMode();
+            ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+            
+            FTPFile[] files = ftpClient.listFiles(theServer.getPath());
+            
+            if (files != null && files.length > 0) {
+                for (FTPFile aFile : files) {
+                    String currentFileName = aFile.getName();
+                    if (currentFileName.equals(".") || currentFileName.equals("..")) {
+                        // skip parent directory and the directory itself
+                        continue;
+                    }
+     
+                    if (aFile.isFile()) {
+                    	LOG.debug(aFile.getName() + "," + aFile.getTimestamp());
+                    }
+                }
+            }            
+        } catch (Exception ex) {
+        	LOG.debug("\nOOOPS! Something wrong happened.\n");
+            ex.printStackTrace();
+        } finally {
+            try {
+                if (ftpClient.isConnected()) {
+                    ftpClient.logout();
+                    ftpClient.disconnect();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                return false;
+            }
+            
+            return true;
+        }
+	}
+	
+	@SuppressWarnings("finally")	
+	public boolean download(Server theServer) throws Exception {
+ 
+        try {
+
+        	this.login(theServer);
             ftpClient.enterLocalPassiveMode();
             ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
 
-            // APPROACH #1: using retrieveFile(String, OutputStream)
             String fileName = "Daily_Calls_CTR001_01012018_43_20_ALL_V3.txt";
             String remoteFile1 = path + "/" + fileName;
             File downloadFile1 = new File(
@@ -59,14 +123,13 @@ public class FTPService {
             outputStream1.close();
  
             if (success) {
-                System.out.println("File " + fileName + " has been downloaded successfully.");
+            	LOG.debug("File " + fileName + " has been downloaded successfully.");
             }            
  
         } catch (Exception ex) {
         	LOG.debug("\nOOOPS! Something wrong happened.\n");
             ex.printStackTrace();
         } finally {
-            // logs out and disconnects from server
             try {
                 if (ftpClient.isConnected()) {
                     ftpClient.logout();
