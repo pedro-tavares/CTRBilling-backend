@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.javalabs.dto.DowloadFTPFileInfo;
 import com.javalabs.dto.FTPFileInfo;
 import com.javalabs.dto.Server;
 
@@ -109,26 +110,25 @@ public class FTPService {
 	}
 	
 	@SuppressWarnings("finally")	
-	public boolean download(Server theServer) throws Exception {
+	public boolean download(DowloadFTPFileInfo fileInfo) throws Exception {
  
         try {
 
-        	this.login(theServer);
+        	this.login(fileInfo.getServer());
             ftpClient.enterLocalPassiveMode();
             ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
 
-            String fileName = "Daily_Calls_CTR001_01012018_43_20_ALL_V3.txt";
-            String remoteFile1 = path + "/" + fileName;
+            String remoteFile1 = path + "/" + fileInfo.getFileName();
             File downloadFile1 = new File(
             		"/home/spiro-admin/java_labs/CTRBilling-backend/target/downloads/" + 
-            		fileName
+            		fileInfo.getFileName()
             );
             OutputStream outputStream1 = new BufferedOutputStream(new FileOutputStream(downloadFile1));
             boolean success = ftpClient.retrieveFile(remoteFile1, outputStream1);
             outputStream1.close();
  
             if (success) {
-            	LOG.debug("File " + fileName + " has been downloaded successfully.");
+            	LOG.debug("File " + fileInfo.getFileName() + " has been downloaded successfully.");
             }            
  
         } catch (Exception ex) {

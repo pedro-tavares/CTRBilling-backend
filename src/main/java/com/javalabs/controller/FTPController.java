@@ -1,5 +1,6 @@
 package com.javalabs.controller;
 
+import com.javalabs.dto.DowloadFTPFileInfo;
 import com.javalabs.dto.FTPFileInfo;
 import com.javalabs.dto.Server;
 import com.javalabs.service.ftp.FTPService;
@@ -49,6 +50,21 @@ public class FTPController {
 		List<FTPFileInfo> fileInfoList = service.dir(server);
 		
 		return ResponseEntity.ok(fileInfoList);
+	}
+	
+	@RequestMapping(path = "/download_file", method = RequestMethod.POST)
+	public ResponseEntity<String> dir(@RequestBody DowloadFTPFileInfo fileInfo) throws Exception {
+		LOG.debug(
+				"\nFTPController DOWNLOAD_FILE, server:" + fileInfo.getServer().getName() 
+				+ ", user:" + fileInfo.getServer().getUsername()
+				+ ", fileName:" + fileInfo.getFileName()
+		);
+
+		if (service.download(fileInfo)) {
+			return ResponseEntity.ok().build();
+		}
+		
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	}
 	
 }
