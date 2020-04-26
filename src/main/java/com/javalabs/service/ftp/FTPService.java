@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.javalabs.constants.IConstants;
 import com.javalabs.dto.DowloadFTPFileInfo;
 import com.javalabs.dto.FTPFileInfo;
 import com.javalabs.dto.Server;
@@ -119,10 +120,7 @@ public class FTPService {
             ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
 
             String remoteFile1 = path + "/" + fileInfo.getFileName();
-            File downloadFile1 = new File(
-            		"/home/spiro-admin/java_labs/CTRBilling-backend/target/downloads/" + 
-            		fileInfo.getFileName()
-            );
+            File downloadFile1 = new File(IConstants.DOWNLOADS_DIR + fileInfo.getFileName());
             OutputStream outputStream1 = new BufferedOutputStream(new FileOutputStream(downloadFile1));
             boolean success = ftpClient.retrieveFile(remoteFile1, outputStream1);
             outputStream1.close();

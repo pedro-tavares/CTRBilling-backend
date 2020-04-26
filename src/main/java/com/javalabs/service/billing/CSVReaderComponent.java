@@ -1,5 +1,6 @@
 package com.javalabs.service.billing;
 
+import com.javalabs.constants.IConstants;
 import com.javalabs.dto.DowloadFTPFileInfo;
 import com.opencsv.CSVReader;
 
@@ -8,18 +9,20 @@ import java.io.IOException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CSVReaderComponent {
 	
 	private static Logger LOG = LoggerFactory.getLogger(CSVReaderComponent.class);
 
 	public boolean process(DowloadFTPFileInfo fileInfo) {
 
-        String csvFile = fileInfo.getFileName();
+        String csvFile = IConstants.DOWNLOADS_DIR + fileInfo.getFileName();
         
 		LOG.debug(
 				"\nCSVReaderComponent PROCESS, server:" + fileInfo.getServer().getName() 
-				+ ", fileName:" + fileInfo.getFileName()
+				+ ", csvFile:" + csvFile
 		);        
 
         CSVReader reader = null;
