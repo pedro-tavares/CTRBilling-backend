@@ -1,4 +1,4 @@
-package com.javalabs.controller;
+package com.javalabs.user;
 
 import java.util.List;
 
@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.javalabs.dto.User;
-import com.javalabs.service.user.UserEntity;
-import com.javalabs.service.user.UserService;
 
 @RestController
 @CrossOrigin
