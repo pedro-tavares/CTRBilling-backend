@@ -1,4 +1,4 @@
-package com.javalabs.service.billing;
+package com.javalabs.billing;
 
 import com.javalabs.constants.IConstants;
 import com.javalabs.dto.DowloadFTPFileInfo;

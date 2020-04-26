@@ -1,4 +1,4 @@
-package com.javalabs.controller;
+package com.javalabs.billing;
 
 import org.dozer.DozerBeanMapper;
 import org.slf4j.Logger;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.javalabs.dto.DowloadFTPFileInfo;
-import com.javalabs.service.billing.BillingService;
 
 @RestController
 @CrossOrigin
