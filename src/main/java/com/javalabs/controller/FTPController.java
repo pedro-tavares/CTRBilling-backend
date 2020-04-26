@@ -23,7 +23,7 @@ public class FTPController {
 	private Logger LOG = LoggerFactory.getLogger(FTPController.class);
 
 	@Autowired
-	FTPService service;
+	FTPService ftpService;
 
 	@Autowired
 	DozerBeanMapper mapper;
@@ -34,7 +34,7 @@ public class FTPController {
 				"\nFTPController LOGIN, server:" + server.getName() + ", user:" +server.getUsername()
 		);
 
-		if (service.login(server)) {
+		if (ftpService.login(server)) {
 			return ResponseEntity.ok().build();
 		}
 		
@@ -47,24 +47,39 @@ public class FTPController {
 				"\nFTPController DIR, server:" + server.getName() + ", user:" +server.getUsername()
 		);
 
-		List<FTPFileInfo> fileInfoList = service.dir(server);
+		List<FTPFileInfo> fileInfoList = ftpService.dir(server);
 		
 		return ResponseEntity.ok(fileInfoList);
 	}
 	
 	@RequestMapping(path = "/download_file", method = RequestMethod.POST)
-	public ResponseEntity<String> dir(@RequestBody DowloadFTPFileInfo fileInfo) throws Exception {
+	public ResponseEntity<String> downloadFile(@RequestBody DowloadFTPFileInfo fileInfo) throws Exception {
 		LOG.debug(
 				"\nFTPController DOWNLOAD_FILE, server:" + fileInfo.getServer().getName() 
 				+ ", user:" + fileInfo.getServer().getUsername()
 				+ ", fileName:" + fileInfo.getFileName()
 		);
 
-		if (service.download(fileInfo)) {
+		if (ftpService.download(fileInfo)) {
 			return ResponseEntity.ok().build();
 		}
 		
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+	}
+
+	@RequestMapping(path = "/process_file", method = RequestMethod.POST)
+	public ResponseEntity<String> processFile(@RequestBody DowloadFTPFileInfo fileInfo) throws Exception {
+		LOG.debug(
+				"\nFTPController PROCESS_FILE, server:" + fileInfo.getServer().getName() 
+				+ ", user:" + fileInfo.getServer().getUsername()
+				+ ", fileName:" + fileInfo.getFileName()
+		);
+
+		if (ftpService.download(fileInfo)) {
+			return ResponseEntity.ok().build();
+		}
+		
+		return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).build();
 	}
 	
 }
