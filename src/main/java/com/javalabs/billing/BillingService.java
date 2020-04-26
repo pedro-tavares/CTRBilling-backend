@@ -1,6 +1,8 @@
 package com.javalabs.billing;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +22,9 @@ public class BillingService {
 	
 	@Autowired
 	CSVReaderComponent csvReader;
+	
+	@Autowired
+	BillingRecordRepository billingRecordRepository;
 	
 	public boolean process(DowloadFTPFileInfo fileInfo) throws Exception {
 		LOG.debug(
@@ -41,7 +46,12 @@ public class BillingService {
 			LOG.debug("File " + fileInfo.getFileName() + " DOWNLOADED.");
 		}
 		
-		return csvReader.process(fileInfo);
+		List<BillingRecordEntity> billingRecordEntityList = csvReader.process(fileInfo);
+		
+		LOG.debug("Saving " + billingRecordEntityList.size() + " records...");
+		billingRecordRepository.saveAll(billingRecordEntityList);
+		
+		return true;
 	}
 
 }

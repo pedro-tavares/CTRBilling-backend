@@ -6,6 +6,8 @@ import com.opencsv.CSVReader;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,20 +18,23 @@ public class CSVReaderComponent {
 	
 	private static Logger LOG = LoggerFactory.getLogger(CSVReaderComponent.class);
 
-	public boolean process(DowloadFTPFileInfo fileInfo) {
+	public List<BillingRecordEntity> process(DowloadFTPFileInfo fileInfo) {
 
         String csvFile = IConstants.DOWNLOADS_DIR + fileInfo.getFileName();
         
 		LOG.debug(
 				"\nCSVReaderComponent PROCESS, server:" + fileInfo.getServer().getName() 
 				+ ", csvFile:" + csvFile
-		);        
+		); 
+		
+		List<BillingRecordEntity> billingRecordEntityList = new ArrayList<BillingRecordEntity>(); 
 
         CSVReader reader = null;
         try {
             reader = new CSVReader(new FileReader(csvFile));
             String[] line;
             while ((line = reader.readNext()) != null) {
+            	
                 LOG.debug("BillingRecord [" + 
                 		"Call Type=" + line[0] + 
                 		", Call Cause=" + line[1] + 
@@ -75,12 +80,60 @@ public class CSVReaderComponent {
                 		", Routing Code=" + line[41] +
                 		"]"
                 );
+                
+                BillingRecordEntity billingRecord = new BillingRecordEntity(
+                		null,
+                		line[0],
+                		line[1],
+                		line[2],
+                		line[3],
+                		line[4],
+                		line[5],
+                		line[6],
+                		line[7],
+                		line[8],
+                		line[9],
+                		line[10],
+                		line[11],
+                		line[12],
+                		line[13],
+                		line[14],
+                		line[15],
+                		line[16],
+                		line[17],
+                		line[18],
+                		line[19],
+                		line[20],
+                		line[21],
+                		line[22],
+                		line[23],
+                		line[24],
+                		line[25],
+                		line[26],
+                		line[27],
+                		line[28],
+                		line[29],
+                		line[30],
+                		line[31],
+                		line[32],
+                		line[33],
+                		line[34],
+                		line[35],
+                		line[36],
+                		line[37],
+                		line[38],
+                		line[39],
+                		line[40],
+                		line[41]
+                );
+                billingRecordEntityList.add(billingRecord);
             }
+                                  
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return true;
+        return billingRecordEntityList;
     }
 
 }

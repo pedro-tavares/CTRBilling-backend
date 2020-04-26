@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.javalabs.config.ConfigFactory;
+
 @Entity
 @Table(name = "billing_record")
 public class BillingRecordEntity {
@@ -19,37 +21,37 @@ public class BillingRecordEntity {
 	private String CallCause;
 	private String CustomerIdentifir;
 	private String TelephoneNumberDialled;
-	private Date CallDate;
+	private String CallDate;
 	private String CallTime;
-	private Integer Duration;
-	private Integer BytesTransmitted;
-	private Integer BytesReceived;
+	private String Duration;
+	private String BytesTransmitted;
+	private String BytesReceived;
 	private String Description;
 	private String Chargecode;
 	private String TimeBand;
-	private BigDecimal Salesprice;
-	private BigDecimal SalespricePreBundle;
+	private String Salesprice;
+	private String SalespricePreBundle;
 	private String Extension;
 	private String DDI;
 	private String GroupingID;
 	private String CallClass;
 	private String Carrier;
 	private String Recording;
-	private Float VAT;
+	private String VAT;
 	private String CountryOfOrigin;
 	private String Network;
 	private String RetailTariffCode;
 	private String RemoteNetwork;
 	private String APN;
 	private String DivertedNumber;
-	private Date RingTime;
+	private String RingTime;
 	private String RecordID;
 	private String Currency;
 	private String PresentationNumber;
 	private String NetworkAccessReference;
 	private String NGCSAccessCharge;
 	private String NGCSServiceCharge;
-	private Integer TotalBytesTransferred;
+	private String TotalBytesTransferred;
 	private String UserID;
 	private String OnwardBillingReference;
 	private String ContractName;
@@ -59,6 +61,118 @@ public class BillingRecordEntity {
 	private String RoutingCode;
 
 	public BillingRecordEntity() {}
+
+	public BillingRecordEntity(Object id, String callType, String callCause, String customerIdentifir,
+			String telephoneNumberDialled, String callDate, String callTime, String duration, String bytesTransmitted,
+			String bytesReceived, String description, String chargecode, String timeBand, String salesprice,
+			String salespricePreBundle, String extension, String dDI, String groupingID, String callClass,
+			String carrier, String recording, String vAT, String countryOfOrigin, String network,
+			String retailTariffCode, String remoteNetwork, String aPN, String divertedNumber, String ringTime,
+			String recordID, String currency, String presentationNumber, String networkAccessReference,
+			String nGCSAccessCharge, String nGCSServiceCharge, String totalBytesTransferred, String userID,
+			String onwardBillingReference, String contractName, String bundleName, String bundleAllowance,
+			String discountReference, String routingCode) {
+		
+		super();
+		
+		this.id = null;//id;
+		CallType = callType;
+		CallCause = callCause;
+		CustomerIdentifir = customerIdentifir;
+		TelephoneNumberDialled = telephoneNumberDialled;
+		CallDate = callDate;
+		CallTime = callTime;
+		Duration = duration;
+		BytesTransmitted = bytesTransmitted;
+		BytesReceived = bytesReceived;
+		Description = description;
+		Chargecode = chargecode;
+		TimeBand = timeBand;
+		Salesprice = salesprice;
+		SalespricePreBundle = salespricePreBundle;
+		Extension = extension;
+		DDI = dDI;
+		GroupingID = groupingID;
+		CallClass = callClass;
+		Carrier = carrier;
+		Recording = recording;
+		VAT = vAT;
+		CountryOfOrigin = countryOfOrigin;
+		Network = network;
+		RetailTariffCode = retailTariffCode;
+		RemoteNetwork = remoteNetwork;
+		APN = aPN;
+		DivertedNumber = divertedNumber;
+		RingTime = ringTime;
+		RecordID = recordID;
+		Currency = currency;
+		PresentationNumber = presentationNumber;
+		NetworkAccessReference = networkAccessReference;
+		NGCSAccessCharge = nGCSAccessCharge;
+		NGCSServiceCharge = nGCSServiceCharge;
+		TotalBytesTransferred = totalBytesTransferred;
+		UserID = userID;
+		OnwardBillingReference = onwardBillingReference;
+		ContractName = contractName;
+		BundleName = bundleName;
+		BundleAllowance = bundleAllowance;
+		DiscountReference = discountReference;
+		RoutingCode = routingCode;
+	}
+
+	public BillingRecordEntity(Long id, String string1, String string2, String string3, String string4,
+			String string5, String string6, String string7, String string8, String string9, String string10,
+			String string11, String string12, String string13, String string14, String string15, String string16,
+			String string17, String string18, String string19, String string20, String string21, String string22,
+			String string23, String string24, String string25, String string26, String string27, String string28,
+			String string29, String string30, String string31, String string32, String string33, String string34,
+			String string35, String string36, String string37, String string38, String string39, String string40,
+			String string41, String string42) {
+
+		this.id = id;
+		CallType = string1;
+		CallCause = string2;
+		CustomerIdentifir = string3;
+		TelephoneNumberDialled = string4;
+		CallDate = string5;
+		CallTime = string6;
+		Duration = string7;
+		BytesTransmitted = string8;
+		BytesReceived = string9;
+		Description = string10;
+		Chargecode = string11;
+		TimeBand = string12;
+		Salesprice = string13;
+		SalespricePreBundle = string14;
+		Extension = string15;
+		DDI = string16;
+		GroupingID = string17;
+		CallClass = string18;
+		Carrier = string19;
+		Recording = string20;
+		VAT = string21;
+		CountryOfOrigin = string22;
+		Network = string23;
+		RetailTariffCode = string24;
+		RemoteNetwork = string25;
+		APN = string26;
+		DivertedNumber = string27;
+		RingTime = string28;
+		RecordID = string29;
+		Currency = string30;
+		PresentationNumber = string31;
+		NetworkAccessReference = string32;
+		NGCSAccessCharge = string33;
+		NGCSServiceCharge = string34;
+		TotalBytesTransferred = string35;
+		UserID = string36;
+		OnwardBillingReference = string37;
+		ContractName = string38;
+		BundleName = string39;
+		BundleAllowance = string40;
+		DiscountReference = string41;
+		RoutingCode = string42;
+	}
 
 	public Long getId() {
 		return id;
@@ -100,11 +214,11 @@ public class BillingRecordEntity {
 		TelephoneNumberDialled = telephoneNumberDialled;
 	}
 
-	public Date getCallDate() {
+	public String getCallDate() {
 		return CallDate;
 	}
 
-	public void setCallDate(Date callDate) {
+	public void setCallDate(String callDate) {
 		CallDate = callDate;
 	}
 
@@ -116,27 +230,27 @@ public class BillingRecordEntity {
 		CallTime = callTime;
 	}
 
-	public Integer getDuration() {
+	public String getDuration() {
 		return Duration;
 	}
 
-	public void setDuration(Integer duration) {
+	public void setDuration(String duration) {
 		Duration = duration;
 	}
 
-	public Integer getBytesTransmitted() {
+	public String getBytesTransmitted() {
 		return BytesTransmitted;
 	}
 
-	public void setBytesTransmitted(Integer bytesTransmitted) {
+	public void setBytesTransmitted(String bytesTransmitted) {
 		BytesTransmitted = bytesTransmitted;
 	}
 
-	public Integer getBytesReceived() {
+	public String getBytesReceived() {
 		return BytesReceived;
 	}
 
-	public void setBytesReceived(Integer bytesReceived) {
+	public void setBytesReceived(String bytesReceived) {
 		BytesReceived = bytesReceived;
 	}
 
@@ -164,19 +278,19 @@ public class BillingRecordEntity {
 		TimeBand = timeBand;
 	}
 
-	public BigDecimal getSalesprice() {
+	public String getSalesprice() {
 		return Salesprice;
 	}
 
-	public void setSalesprice(BigDecimal salesprice) {
+	public void setSalesprice(String salesprice) {
 		Salesprice = salesprice;
 	}
 
-	public BigDecimal getSalespricePreBundle() {
+	public String getSalespricePreBundle() {
 		return SalespricePreBundle;
 	}
 
-	public void setSalespricePreBundle(BigDecimal salespricePreBundle) {
+	public void setSalespricePreBundle(String salespricePreBundle) {
 		SalespricePreBundle = salespricePreBundle;
 	}
 
@@ -228,11 +342,11 @@ public class BillingRecordEntity {
 		Recording = recording;
 	}
 
-	public Float getVAT() {
+	public String getVAT() {
 		return VAT;
 	}
 
-	public void setVAT(Float vAT) {
+	public void setVAT(String vAT) {
 		VAT = vAT;
 	}
 
@@ -284,11 +398,11 @@ public class BillingRecordEntity {
 		DivertedNumber = divertedNumber;
 	}
 
-	public Date getRingTime() {
+	public String getRingTime() {
 		return RingTime;
 	}
 
-	public void setRingTime(Date ringTime) {
+	public void setRingTime(String ringTime) {
 		RingTime = ringTime;
 	}
 
@@ -340,11 +454,11 @@ public class BillingRecordEntity {
 		NGCSServiceCharge = nGCSServiceCharge;
 	}
 
-	public Integer getTotalBytesTransferred() {
+	public String getTotalBytesTransferred() {
 		return TotalBytesTransferred;
 	}
 
-	public void setTotalBytesTransferred(Integer totalBytesTransferred) {
+	public void setTotalBytesTransferred(String totalBytesTransferred) {
 		TotalBytesTransferred = totalBytesTransferred;
 	}
 
