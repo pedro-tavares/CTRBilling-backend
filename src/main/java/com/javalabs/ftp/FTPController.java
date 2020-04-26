@@ -1,9 +1,8 @@
-package com.javalabs.controller;
+package com.javalabs.ftp;
 
 import com.javalabs.dto.DowloadFTPFileInfo;
 import com.javalabs.dto.FTPFileInfo;
 import com.javalabs.dto.Server;
-import com.javalabs.service.ftp.FTPService;
 
 import java.util.List;
 

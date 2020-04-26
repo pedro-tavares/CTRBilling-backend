@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.javalabs.dto.DowloadFTPFileInfo;
-import com.javalabs.service.ftp.FTPService;
+import com.javalabs.ftp.FTPService;
 
 @Service
 public class BillingService {
