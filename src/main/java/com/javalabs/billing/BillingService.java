@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.javalabs.dto.BillingRecord;
 import com.javalabs.dto.DowloadFTPFileInfo;
 import com.javalabs.ftp.FTPService;
 
@@ -54,4 +55,12 @@ public class BillingService {
 		return true;
 	}
 
+	public List<BillingRecordEntity> getBillingRecords(String fileName) throws Exception {
+		LOG.debug(
+				"\nBillingService GET_BILLING_RECORDS " + 
+				", fileName:" + fileName
+		);
+		
+		return billingRecordRepository.findByFileName(fileName);
+	}
 }

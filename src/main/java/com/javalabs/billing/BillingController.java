@@ -1,5 +1,8 @@
 package com.javalabs.billing;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.dozer.DozerBeanMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.javalabs.dto.BillingRecord;
 import com.javalabs.dto.DowloadFTPFileInfo;
 
 @RestController
@@ -39,8 +43,20 @@ public class BillingController {
 			return ResponseEntity.ok().build();
 		}
 		
-		return ResponseEntity.ok().build();
-		//return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).build();
+	}
+
+	@RequestMapping(path = "/get_billing_records", method = RequestMethod.POST)
+	public ResponseEntity<List<BillingRecord>> getBillingRecords(@RequestBody String fileName) throws Exception {
+		LOG.debug(
+				"\nBillingController GET_BILLING_RECORDS " + 
+				", fileName:" + fileName
+		);
+
+		List<BillingRecordEntity> billingRecordEntityList = billingService.getBillingRecords(fileName);
+		List<BillingRecord> billingRecordList = new ArrayList<BillingRecord>();
+
+		return ResponseEntity.ok(billingRecordList);
 	}
 	
 }
