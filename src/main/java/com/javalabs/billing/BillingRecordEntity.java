@@ -1,14 +1,11 @@
 package com.javalabs.billing;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import com.javalabs.config.ConfigFactory;
 
 @Entity
 @Table(name = "billing_record")
@@ -17,6 +14,8 @@ public class BillingRecordEntity {
 	@Id
 	@GeneratedValue
 	private Long id;
+	private String FileName;
+	private Date Timestamp;
 	private String CallType;
 	private String CallCause;
 	private String CustomerIdentifir;
@@ -62,7 +61,7 @@ public class BillingRecordEntity {
 
 	public BillingRecordEntity() {}
 
-	public BillingRecordEntity(Object id, String callType, String callCause, String customerIdentifir,
+	public BillingRecordEntity(Object id, String fileName, Date timestamp, String callType, String callCause, String customerIdentifir,
 			String telephoneNumberDialled, String callDate, String callTime, String duration, String bytesTransmitted,
 			String bytesReceived, String description, String chargecode, String timeBand, String salesprice,
 			String salespricePreBundle, String extension, String dDI, String groupingID, String callClass,
@@ -76,6 +75,8 @@ public class BillingRecordEntity {
 		super();
 		
 		this.id = null;//id;
+		FileName = fileName;
+		Timestamp = timestamp;
 		CallType = callType;
 		CallCause = callCause;
 		CustomerIdentifir = customerIdentifir;
@@ -120,7 +121,7 @@ public class BillingRecordEntity {
 		RoutingCode = routingCode;
 	}
 
-	public BillingRecordEntity(Long id, String string1, String string2, String string3, String string4,
+	public BillingRecordEntity(Long id, String fileName, Date timestamp, String string1, String string2, String string3, String string4,
 			String string5, String string6, String string7, String string8, String string9, String string10,
 			String string11, String string12, String string13, String string14, String string15, String string16,
 			String string17, String string18, String string19, String string20, String string21, String string22,
@@ -130,6 +131,8 @@ public class BillingRecordEntity {
 			String string41, String string42) {
 
 		this.id = id;
+		FileName = fileName;
+		Timestamp = timestamp;
 		CallType = string1;
 		CallCause = string2;
 		CustomerIdentifir = string3;
@@ -182,6 +185,22 @@ public class BillingRecordEntity {
 		this.id = id;
 	}
 
+	public String getFileName() {
+		return FileName;
+	}
+
+	public void setFileName(String fileName) {
+		FileName = fileName;
+	}
+
+	public Date getTimestamp() {
+		return Timestamp;
+	}
+
+	public void setTimestamp(Date timestamp) {
+		Timestamp = timestamp;
+	}
+	
 	public String getCallType() {
 		return CallType;
 	}

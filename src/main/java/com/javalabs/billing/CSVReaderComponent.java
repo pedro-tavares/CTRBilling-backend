@@ -7,6 +7,7 @@ import com.opencsv.CSVReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -83,6 +84,8 @@ public class CSVReaderComponent {
                 
                 BillingRecordEntity billingRecord = new BillingRecordEntity(
                 		null,
+                		fileInfo.getFileName(),
+                		new Date(),
                 		line[0],
                 		line[1],
                 		line[2],
