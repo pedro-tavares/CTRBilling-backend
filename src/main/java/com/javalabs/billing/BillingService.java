@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.javalabs.billing.log.BillingFileLogEntity;
+import com.javalabs.billing.log.BillingFileLogRepository;
 import com.javalabs.dto.DowloadFTPFileInfo;
 import com.javalabs.ftp.FTPService;
 
@@ -60,7 +62,7 @@ public class BillingService {
 		LOG.debug("SAVED " + billingRecordEntityList.size() + " records...");
 		
 		//log
-		BillingFileLogEntity logEntry = new BillingFileLogEntity(fileInfo.getFileName());
+		BillingFileLogEntity logEntry = new BillingFileLogEntity(fileInfo.getFileName(), "DOWNLOAD");
 		billingFileLogRepository.save(logEntry);
 		
 		return true;

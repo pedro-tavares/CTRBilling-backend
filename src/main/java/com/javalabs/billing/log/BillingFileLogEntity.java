@@ -1,4 +1,4 @@
-package com.javalabs.billing;
+package com.javalabs.billing.log;
 
 import java.util.Date;
 
@@ -15,14 +15,16 @@ public class BillingFileLogEntity {
 	@GeneratedValue
 	private Long id;	
 	String fileName;
+	String type; //TODO: create enum DOWNLOAD, UPLOAD
 	Date timestamp;
 	
 	public BillingFileLogEntity() {}
 	
-	public BillingFileLogEntity(String fileName) {
+	public BillingFileLogEntity(String fileName, String type) {
 		super();
 		
 		this.fileName = fileName;
+		this.type = type;
 		this.timestamp = new Date();
 	}
 	
@@ -42,6 +44,14 @@ public class BillingFileLogEntity {
 		this.fileName = fileName;
 	}
 
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+	
 	public Date getTimestamp() {
 		return timestamp;
 	}
