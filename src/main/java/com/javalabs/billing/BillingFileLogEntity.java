@@ -17,6 +17,8 @@ public class BillingFileLogEntity {
 	String fileName;
 	Date timestamp;
 	
+	public BillingFileLogEntity() {}
+	
 	public BillingFileLogEntity(String fileName) {
 		super();
 		

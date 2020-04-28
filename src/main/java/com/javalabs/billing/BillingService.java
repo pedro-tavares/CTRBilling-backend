@@ -24,6 +24,9 @@ public class BillingService {
 	
 	@Autowired
 	BillingRecordRepository billingRecordRepository;
+
+	@Autowired
+	BillingFileLogRepository billingFileLogRepository;
 	
 	public boolean process(DowloadFTPFileInfo fileInfo) throws Exception {
 		LOG.debug(
@@ -31,6 +34,15 @@ public class BillingService {
 				+ ", fileName:" + fileInfo.getFileName()
 		);
 
+		// Check if file already processed
+		if (billingFileLogRepository.findByFileName(fileInfo.getFileName()) != null) {
+			LOG.debug("\nBillingService PROCESS, file " + fileInfo.getFileName() + " has already been processed.");
+			
+			return true;
+		}
+		
+		// Download file and Process
+		
 		File downloadFile = new File(fileInfo.getServer().getName());
 		if (!downloadFile.exists()) {
 			LOG.debug("\nBillingService PROCESS, file " + fileInfo.getFileName() + " NOT exists. Downloading...");
@@ -43,9 +55,13 @@ public class BillingService {
 		}
 		
 		List<BillingRecordEntity> billingRecordEntityList = csvReader.process(fileInfo);
-		
-		LOG.debug("Saving " + billingRecordEntityList.size() + " records...");
+				
 		billingRecordRepository.saveAll(billingRecordEntityList);
+		LOG.debug("SAVED " + billingRecordEntityList.size() + " records...");
+		
+		//log
+		BillingFileLogEntity logEntry = new BillingFileLogEntity(fileInfo.getFileName());
+		billingFileLogRepository.save(logEntry);
 		
 		return true;
 	}
