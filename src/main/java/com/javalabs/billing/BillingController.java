@@ -6,6 +6,7 @@ import java.util.List;
 import org.dozer.DozerBeanMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,6 +57,16 @@ public class BillingController {
 		List<BillingRecordEntity> billingRecordEntityList = billingService.getBillingRecords(fileName);
 		List<BillingRecord> billingRecordList = new ArrayList<BillingRecord>();
 
+		int i=0;
+		for (BillingRecordEntity billingRecordEntity: billingRecordEntityList) {
+			if (i > 0) { // skip header
+				BillingRecord billingRecord = new BillingRecord();
+				BeanUtils.copyProperties(billingRecordEntity, billingRecord);
+				billingRecordList.add(billingRecord);
+			}
+			i++;			
+		}
+		
 		return ResponseEntity.ok(billingRecordList);
 	}
 	
