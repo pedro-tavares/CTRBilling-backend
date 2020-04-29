@@ -28,6 +28,7 @@ public class CSVReaderComponent {
 				+ ", csvFile:" + csvFile
 		); 
 		
+		List<String> addedTimesList = new ArrayList<String>();
 		List<BillingRecordEntity> billingRecordEntityList = new ArrayList<BillingRecordEntity>(); 
 
         CSVReader reader = null;
@@ -129,7 +130,11 @@ public class CSVReaderComponent {
                 		line[40],
                 		line[41]
                 );
-                billingRecordEntityList.add(billingRecord);
+                String dateAndTime = line[4] + line[5];
+                if (!billingRecordEntityList.contains(dateAndTime)) { // avoid duplicate by call date+time
+                	addedTimesList.add(dateAndTime);
+                	billingRecordEntityList.add(billingRecord);
+                }
             }
                                   
         } catch (IOException e) {
