@@ -35,7 +35,13 @@ public class CSVReaderComponent {
         try {
             reader = new CSVReader(new FileReader(csvFile));
             String[] line;
+            boolean headerProcessed = false;
             while ((line = reader.readNext()) != null) {
+            	
+            	if (!headerProcessed) {
+            		headerProcessed = true;
+            		continue;
+            	}
             	
                 LOG.debug("BillingRecord [" + 
                 		"Call Type=" + line[0] + 
@@ -131,7 +137,7 @@ public class CSVReaderComponent {
                 		line[41]
                 );
                 String dateAndTime = line[4] + line[5];
-                if (!billingRecordEntityList.contains(dateAndTime)) { // avoid duplicate by call date+time
+                if (!addedTimesList.contains(dateAndTime)) { // avoid duplicate by call date+time
                 	addedTimesList.add(dateAndTime);
                 	billingRecordEntityList.add(billingRecord);
                 }
