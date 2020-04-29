@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 public interface BillingRecordRepository extends JpaRepository<BillingRecordEntity, Long> {
 
     @Query(
-    		value = "SELECT * FROM billing_record b WHERE b.file_name = :FileName",
+    		value = "SELECT * FROM billing_record b WHERE b.file_name = :FileName ORDER BY b.call_time",
 			nativeQuery = true)
     List<BillingRecordEntity> findByFileName(String FileName);
 }
