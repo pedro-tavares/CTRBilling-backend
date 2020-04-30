@@ -15,12 +15,11 @@ public class BillingFileLogService {
 	@Autowired
 	BillingFileLogRepository billingFileLogRepository;
 
-	public BillingFileLogEntity getBillingFileLogRecord(String fileName) throws Exception {
+	public List<BillingFileLogEntity> getBillingFileLogRecords() throws Exception {
 		LOG.debug(
-				"\nBillinFileLogService GET_BILLING_FILE_LOG_RECORD " + 
-				", fileName:" + fileName
+				"\nBillinFileLogService GET_BILLING_FILE_LOG_RECORDS "
 		);
 		
-		return billingFileLogRepository.findByFileName(fileName);
+		return billingFileLogRepository.findAll();
 	}
 }

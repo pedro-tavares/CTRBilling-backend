@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,12 +16,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.javalabs.dto.BillingFileLog;
-import com.javalabs.dto.BillingRecord;
-import com.javalabs.dto.DowloadFTPFileInfo;
 
 @RestController
 @CrossOrigin
-@RequestMapping(path = "/billing")
+@RequestMapping(path = "/billing_file_log")
 public class BillingFileLogController {
 
 	private static Logger LOG = LoggerFactory.getLogger(BillingFileLogController.class);
@@ -34,18 +31,21 @@ public class BillingFileLogController {
 	DozerBeanMapper mapper;
 
 	@RequestMapping(path = "/get_billing_file_log_records", method = RequestMethod.POST)
-	public ResponseEntity<BillingFileLog> getBillingFileLogRecords(@RequestBody String fileName) throws Exception {
+	public ResponseEntity<List<BillingFileLog>> getBillingFileLogRecords() throws Exception {
 		LOG.debug(
-				"\nBillingController GET_BILLING_FILE_LOG_RECORDS " + 
-				", fileName:" + fileName
+				"\nBillingController GET_BILLING_FILE_LOG_RECORDS "
 		);
 
-		BillingFileLogEntity billingFileLogEntity = billingFileLogService.getBillingFileLogRecord(fileName);
-		BillingFileLog billingFileLog = new BillingFileLog();
-
-		BeanUtils.copyProperties(billingFileLogEntity, billingFileLog);
+		List<BillingFileLogEntity> billingFileLogEntityList = billingFileLogService.getBillingFileLogRecords();
+		List<BillingFileLog> billingFileLogList = new ArrayList<BillingFileLog>();
 		
-		return ResponseEntity.ok(billingFileLog);
+		for (BillingFileLogEntity bfle: billingFileLogEntityList) {
+			BillingFileLog billingFileLog = new BillingFileLog();
+			BeanUtils.copyProperties(bfle, billingFileLog);
+			billingFileLogList.add(billingFileLog);
+		}
+		
+		return ResponseEntity.ok(billingFileLogList);
 	}
 	
 }

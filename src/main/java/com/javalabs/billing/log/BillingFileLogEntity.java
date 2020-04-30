@@ -15,8 +15,8 @@ public class BillingFileLogEntity {
 	@GeneratedValue
 	private Long id;	
 	String fileName;
-	String type; //TODO: create enum DOWNLOAD, UPLOAD
 	Date timestamp;
+	String type; //TODO: create enum DOWNLOAD, UPLOAD
 	
 	public BillingFileLogEntity() {}
 	
