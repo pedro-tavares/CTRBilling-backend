@@ -9,6 +9,7 @@ public interface BillingFileLogRepository extends JpaRepository<BillingFileLogEn
 
 	@Query(
 			value = "SELECT * FROM billing_file_log b WHERE b.file_name = :fileName",
-			nativeQuery = true)
+			nativeQuery = true
+	)
 	BillingFileLogEntity findByFileName(String fileName);	
 }
