@@ -24,6 +24,15 @@ public class SupplierEntity {
 	
 	public SupplierEntity() {}
 
+	public SupplierEntity(String name, String email) {
+		super();
+		
+		this.id = null;
+		this.name = name;
+		this.email = email;
+		this.timestamp = new Date();
+	}
+	
 	public SupplierEntity(Long id, String name, String email) {
 		super();
 		
